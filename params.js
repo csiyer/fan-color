@@ -11,9 +11,9 @@ const params = {
     n_fanin: 1, // 2A->1B
     n_fanout: 1, // 1A->2B
     n_independent: 2, // 1A->1B
-    n_blocks: 8,                  // how many blocks (sequence + color test)
-    n_repetitions_per_block: 1,   // all sets repeat this many times per block
-    n_associative_test_trials: 3,
+    n_blocks: 6,                  // how many blocks (sequence + color test)
+    n_repetitions_per_block: 2,   // all sets repeat this many times per block
+    n_associative_test_trials: 3, // per block
 
     /////////// OPTIONS ///////////
     show_pairs_together: true,
@@ -28,7 +28,7 @@ const params = {
     prolific_study_id: "PLACEHOLDER_PROLIFIC_ID",
     consent_form_path: "../files/online_consent_form.pdf",
     max_bonus: 4,
-    base_pay: 4,                    // $12/hour
+    base_pay: 3,                    // $12/hour
 };
 params.set_size = params.n_fanin * 3 + params.n_fanout * 3 + params.n_independent * 2 // # total images
 params.set_size_pairs = params.n_fanin * 2 + params.n_fanout * 2 + params.n_independent // total pairs
