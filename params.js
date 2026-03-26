@@ -27,7 +27,7 @@ const params = {
     data_pipe_id: "sNnaSCko8Xca",  // replace with your OSF DataPipe ID
     prolific_study_id: "PLACEHOLDER_PROLIFIC_ID",
     consent_form_path: "../files/online_consent_form.pdf",
-    max_bonus: 4,
+    max_bonus: 3,
     base_pay: 3,                    // $12/hour
 };
 params.set_size = params.n_fanin * 3 + params.n_fanout * 3 + params.n_independent * 2 // # total images

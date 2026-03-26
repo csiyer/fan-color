@@ -9,6 +9,17 @@ async function initTask(jsPsych, subject_id) {
     const instructionStim = allStimuliPaths[0];
     const taskStimuli = jsPsych.randomization.shuffle(allStimuliPaths.slice(1));
 
+    // Capture Prolific metadata
+    const pid = jsPsych.data.getURLVariable('PROLIFIC_PID') || 'unknown';
+    const study_id = jsPsych.data.getURLVariable('STUDY_ID') || 'unknown';
+    const session_id = jsPsych.data.getURLVariable('SESSION_ID') || 'unknown';
+    jsPsych.data.addProperties({
+        prolific_id: pid,
+        study_id: study_id,
+        session_id: session_id,
+        subject_id: subject_id
+    });
+
     const dist = params.color_distance_deg;
     const allUniqueStimuli = [];
     const allSequencePairs = [];
