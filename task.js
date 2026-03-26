@@ -188,7 +188,7 @@ async function initTask(jsPsych, subject_id) {
         // --- Color Memory Test ---
         timeline.push({
             type: jsPsychInstructions,
-            pages: [`<p>Now you will begin a memory test.</p>Identify the color of each object as accurately as you can.</p>`],
+            pages: [`<p>Now you will begin a memory test.</p>Identify the color of each object as accurately as you can to earn bonus money!</p>`],
             show_clickable_nav: true
         });
 
@@ -243,7 +243,7 @@ async function initTask(jsPsych, subject_id) {
         // --- Associative Memory Test ---
         timeline.push({
             type: jsPsychInstructions,
-            pages: [`<p>Now for an associative memory test.</p><p>You will see an image. Select which of the three options below was paired with it.</p>`],
+            pages: [`<p>Now for an associative memory test.</p><p>You will see an image. Correctly select which of the three options below was paired with it to earn bonus money!</p>`],
             show_clickable_nav: true
         });
 
