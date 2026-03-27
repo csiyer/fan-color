@@ -1,4 +1,5 @@
 const params = {
+    experiment_id: "march_pilot1",
     /////////// TIMING ///////////
     completion_time: 15,          // minutes
     stim_duration: 2000,          // ms

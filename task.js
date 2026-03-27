@@ -17,7 +17,9 @@ async function initTask(jsPsych, subject_id) {
         prolific_id: pid,
         study_id: study_id,
         session_id: session_id,
-        subject_id: subject_id
+        subject_id: subject_id,
+        experiment_id: params.experiment_id,
+        experiment_date: new Date().toISOString()
     });
 
     const dist = params.color_distance_deg;
