@@ -32,37 +32,54 @@ remove_cols = ['success','timeout','failed_images','failed_audio','failed_video'
 df = df.drop(columns=[c for c in remove_cols if c in df.columns], errors='ignore')
 if 'path' in df.columns:
     df['image_id'] = df['path'].str.extract(r'obj(\d+)').astype(float)
+
 df_test = df[df['phase'] == 'color_test'].copy()
+df_assoc = df[df['phase'] == 'assoc_test'].copy()
 
 
 # --- Figure 1: overview ---
 #   Number of participants, distribution of completion times, distribution of bonuses, distribution of overall accuracy
-def plot_figure_1(df, df_test):
+def plot_figure_1(df, df_test, df_assoc):
     print(f"Total Participants: {df['subject_id'].nunique()}")
-    plt.figure(figsize=(15, 5))
+    plt.figure(figsize=(18, 5))
     
     # Summary Metrics (from the final_summary phase)
     df_summary = df[df['phase'] == 'final_summary']
     print("\nFinal Metrics from Data:")
-    print(df_summary[['subject_id', 'total_time_min', 'final_avg_error', 'color_accuracy', 'assoc_accuracy', 'final_bonus_earned']])
+    cols_to_print = ['subject_id', 'total_time_min', 'final_avg_error', 'color_accuracy', 'assoc_accuracy', 'adjusted_accuracy', 'final_bonus_earned']
+    # Filter columns that actually exist
+    cols_to_print = [c for c in cols_to_print if c in df_summary.columns]
+    print(df_summary[cols_to_print])
 
-    # Completion Time Distribution
-    plt.subplot(1, 3, 1)
+    # 1.1: Completion Time Distribution
+    plt.subplot(1, 4, 1)
     sns.histplot(df_summary['total_time_min'].astype(float), bins=10, kde=True)
     plt.title('Completion Time (min)')
     
-    # Overall Accuracy per Subject
-    plt.subplot(1, 3, 2)
-    acc = df_test.groupby('subject_id')['error_deg'].mean()
-    sns.histplot(acc, bins=10, kde=True, color='green')
-    plt.title('Avg Error per Sub (deg)')
+    # 1.2: Avg Color Error per Subject
+    plt.subplot(1, 4, 2)
+    acc_color = df_test.groupby('subject_id')['error_deg'].mean()
+    sns.histplot(acc_color, bins=10, kde=True, color='green')
+    plt.title('Avg Color Error per Sub (deg)')
     
-    # All Test Trials Error Distribution
-    plt.subplot(1, 3, 3)
+    # 1.3: Associative Accuracy per Subject
+    plt.subplot(1, 4, 3)
+    if 'is_correct' in df_assoc.columns:
+        acc_assoc = df_assoc.groupby('subject_id')['is_correct'].mean()
+        sns.histplot(acc_assoc, bins=10, kde=True, color='blue')
+        plt.axvline(0.33, color='red', linestyle='--', label='Chance (33%)')
+        plt.title('Associative Acc per Sub')
+        plt.legend()
+    else:
+        plt.title('Assoc Acc (Data Missing)')
+
+    # 1.4: All Color Test Trials Error Distribution
+    plt.subplot(1, 4, 4)
     sns.histplot(df_test['error_deg'], bins=45, kde=True, color='purple')
     plt.axvline(10, color='red', linestyle='--', label='10° Threshold')
-    plt.title('Error Dist (All Trials)')
+    plt.title('Color Error Dist (All Trials)')
     plt.legend()
+    
     plt.tight_layout()
     plt.savefig(os.path.join(FIG_DIR, 'figure_1_overview.png'))
     plt.show()
@@ -132,6 +149,6 @@ def plot_figure_3(df_test):
 
 
 if __name__ == "__main__" and not df.empty:
-    plot_figure_1(df, df_test)
+    plot_figure_1(df, df_test, df_assoc)
     plot_figure_2(df_test)
     plot_figure_3(df_test)
