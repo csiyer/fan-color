@@ -26,6 +26,7 @@ const params = {
     ////////// STUDY STUFF ///////
     data_pipe_id: "sNnaSCko8Xca",  // replace with your OSF DataPipe ID
     prolific_study_id: "PLACEHOLDER_PROLIFIC_ID",
+    prolific_completion_code: "CPLACEHOLDER", // Change this to your Prolific completion code
     consent_form_path: "../files/online_consent_form.pdf",
     max_bonus: 3,
     base_pay: 3,                    // $12/hour
@@ -46,7 +47,7 @@ params.instruction_pages = [
         <canvas id="instruction-canvas" width="450" height="450" style="margin: 0 auto; display: block;"></canvas>
         <p>Test out the color wheel above before moving on.</p>
     </div>`,
-    `<p>Your <strong>bonus</strong> will be calculated based on your performance on the color test trials.</p>
+    `<p>Your <strong>bonus</strong> will be calculated based on your performance on the tests.</p>
         <p>You can earn a bonus of <strong>up to $${params.max_bonus}</strong>, on top of the base pay of $${params.base_pay}!</p>`,
     `<p><strong>Summary</strong></p>
         <p>You will see pairs of images; remember which images go together.</p>

@@ -296,9 +296,12 @@ async function initTask(jsPsych, subject_id) {
                     block: b,
                     target_path: trial.B.path,
                     cue_path: trial.A.path,
-                    condition: trial.A.condition
+                    condition: trial.A.condition,
+                    foil1_path: options.find(o => !o.is_correct).path,
+                    foil2_path: options.filter(o => !o.is_correct)[1].path
                 },
                 on_finish: function (data) {
+                    data.response_index = data.response; // 0, 1, or 2
                     data.is_correct = options[data.response].is_correct;
                 }
             });
@@ -384,9 +387,9 @@ async function initTask(jsPsych, subject_id) {
                     }
                 }
 
-                const pid = jsPsych.data.getURLVariable('PROLIFIC_PID') || 'unknown';
+                const cc = params.prolific_completion_code || 'unknown';
                 setTimeout(() => {
-                    window.location.href = `https://app.prolific.com/submissions/complete?cc=${pid}`;
+                    window.location.href = `https://app.prolific.com/submissions/complete?cc=${cc}`;
                 }, 600);
             });
         }
